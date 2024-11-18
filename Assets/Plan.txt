@@ -1,0 +1,32 @@
+Init
+	GameManager
+		LoadSaves (SaveManager, GameManager, YandexManager)
+		LoadSettings (SettingsManager, LocalisationManager)
+		InitYandex (YandexManager, AdsManager)
+
+
+Экран MainMenu
+загрузка		
+	(MainMenuUIManager)
+	
+	click PlayButton -> Load scene GameplayScene
+	click Settings -> pop up settings screen ( SettingsWindowUI(child of window UI), Settings Manager, AudioManager)
+	click leaderboard -> pop up leaderboard window ( LeaderBoardUI (child of Window UI), YandexLeaderboard )
+	clicl upgrades -> pop up Upgrades Window (UpgradesUI (child of window UI), GameManager, FlowersDict, SaveManager)
+	
+	SettingsWindow
+		MusicSlider (change music volume in AudioManager)
+		SoundSlider (change sound volume in AudioManager)
+		infoButton -> pop up info button (FlowersDict, EnemiesDict)
+		
+экран GameplayScene
+	
+	(GameplayManager)
+	init BoardManager (tileset)
+		 SpawnManager (spawn flowers)
+		 IncomeManager
+		 TimeManager
+		 
+		 
+		 
+	
