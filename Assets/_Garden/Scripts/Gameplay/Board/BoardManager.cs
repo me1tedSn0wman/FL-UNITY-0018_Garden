@@ -11,10 +11,15 @@ public class BoardManager : MonoBehaviour
     public int width;
     public int height;
 
-    public Tile[] groundTiles;
-    public Tile[] wallTiles;
+    public int spawnWidth;
+    public int spawnHeight;
+
+    public RuleTile[] groundTiles;
+    public RuleTile[] wallTiles;
 
     private CellData[,] m_BoardData;
+
+    private List<Vector2Int> offScreenCells;
 
     public void Init() {
         m_Tilemap = GetComponentInChildren<Tilemap>();
@@ -22,18 +27,26 @@ public class BoardManager : MonoBehaviour
 
         m_BoardData = new CellData[width, height];
 
+        offScreenCells = new List<Vector2Int>();
+
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
 
-                Tile tile;
+                RuleTile tile;
                 m_BoardData[i,j] = new CellData();
 
                 if (i == 0 || i == width - 1 || j == 0 || j == height - 1)
                 {
                     int ind = Random.Range(0, wallTiles.Length);
                     tile = wallTiles[ind];
+                    offScreenCells.Add(new Vector2Int(i, j));
                 }
-                else 
+                else if (i == 1 || i == width - 2 || j == 1 || j == height - 2)
+                {
+                    int ind = Random.Range(0, wallTiles.Length);
+                    tile = wallTiles[ind];
+                }
+                else
                 {
                     int ind = Random.Range(0, groundTiles.Length);
                     tile = groundTiles[ind];
@@ -54,5 +67,29 @@ public class BoardManager : MonoBehaviour
         if (cellIndex.x < 0 || cellIndex.x >= width || cellIndex.y<0|| cellIndex.y>=height)
             return null;
         return m_BoardData[cellIndex.x, cellIndex.y];
+    }
+
+    public Vector3 CenterOfGrid() {
+        float centerHor = width * m_Grid.cellSize.x/2;
+        float centerVer = height * m_Grid.cellSize.y/2;
+
+        return new Vector3(centerHor, centerVer, 0);
+    }
+
+    public Vector3 GetRandomSpawnPos() {
+        float posHor = Random.Range(-m_Grid.cellSize.x * spawnWidth, m_Grid.cellSize.x * spawnWidth);
+        float posVert = Random.Range(-m_Grid.cellSize.y * spawnHeight, m_Grid.cellSize.y * spawnHeight);
+
+
+        return CenterOfGrid() + new Vector3(posHor, posVert);
+    }
+
+    public Vector3 GetRandomOffScreenSpawnPos() {
+        int randCell = Random.Range(0, offScreenCells.Count);
+
+        Vector3 pos = m_Grid.GetCellCenterWorld((Vector3Int)offScreenCells[randCell]);
+
+        return pos;
+
     }
 }
