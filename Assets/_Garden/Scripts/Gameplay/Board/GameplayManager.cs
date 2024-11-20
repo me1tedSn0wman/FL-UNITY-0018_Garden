@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
-
+using Utils.PoolControl;
 using Random = UnityEngine.Random;
 
 public enum GameplayState { 
@@ -24,6 +24,10 @@ public class GameplayManager : Singleton<GameplayManager>
     [SerializeField] private PlayerControlManager playerControlManager;
     [SerializeField] public GameplayUIManager gameplayUIManager;
 
+    [SerializeField] public FlowerLibrary flowerLibrary;
+    [SerializeField] public EnemyLibrary enemyLibrary;
+    [SerializeField] public PoolManager poolManager;
+
     [Header("Game Object Anchors")]
     [SerializeField] private Transform flowersAnchor;
     [SerializeField] private Transform enemiesAnchor;
@@ -31,37 +35,43 @@ public class GameplayManager : Singleton<GameplayManager>
     [SerializeField] public Transform projectileAnchor;
 
     [Header("Set Dynamically")]
-    [SerializeField] private GameplayState _gameplayState;
 
-    [SerializeField] private Flower[] flowersPrefabs;
-    [SerializeField] private Enemy[] enemyPrefabs;
+    [SerializeField] private EnemyWaveDef[] enemyWaves;
+
     [SerializeField] private CenterFlower centerFlowerPrefab;
 
-    [SerializeField] private Flower selectedFlower;
-    [SerializeField] public CenterFlower centerFlower;
-
-
-    [SerializeField] private float crntTimeFlowerSpawn;
     [SerializeField] private float timeBetweenFlowerSpawns;
-
-    [SerializeField] private float crntTimeEnemiesSpawn;
     [SerializeField] private float timeBetweenEnemiesSpawns;
+    [SerializeField] private float timeBetweenWaves;
 
-    [SerializeField] private Flower resultFlowerPrefab;
+    [Header("Set Dynamically")]
 
+    [SerializeField] private GameplayState _gameplayState;
     public GameplayState gameplayState {
         get { return _gameplayState; }
         set { _gameplayState = value; }
     }
 
+    [SerializeField] private Flower selectedFlower;
+    [SerializeField] public CenterFlower centerFlower;
+
     [SerializeField] private List<Flower> listOfCurrentFlowers;
     [SerializeField] private List<Enemy> listOfCurrentEnemies;
+
+    [SerializeField] private float crntTimeFlowerSpawn;
+    [SerializeField] private float crntTimeEnemiesSpawn;
+    [SerializeField] private float crntTimeWaveSpawn;
+
+    
+
+
 
     [Header("Variables")]
 
     public int money;
     public int health;
     public float gameTime;
+    public int crntWave;
 
     /*
     public event Action<int> OnMoneyChange;
@@ -83,7 +93,9 @@ public class GameplayManager : Singleton<GameplayManager>
         boardManager.Init();
         mainCamera.transform.position = boardManager.CenterOfGrid() + new Vector3(0,0,-10);
         SpawnCenterFlower();
+        Subscribe();
         InitVariables();
+        InitTimers();
 
         gameplayState = GameplayState.Gameplay;
     }
@@ -94,6 +106,7 @@ public class GameplayManager : Singleton<GameplayManager>
         {
             TrySpawnFlowers();
             TrySpawnEnemies();
+            TrySpawnWave();
             UpdateSelectedFlowerPos();
 
             ChangeGameTimeValue(Time.deltaTime);
@@ -104,15 +117,27 @@ public class GameplayManager : Singleton<GameplayManager>
         money = 0;
         health = 5;
         gameTime = 0.0f;
+        crntWave = 0;
 
         AddMoney(0);
         ChangeGameTimeValue(0);
         ChangeHealth(0);
-
     }
 
-    public void Subscription() { 
-        
+    public void InitTimers() {
+        crntTimeFlowerSpawn = 0.0f;
+        crntTimeEnemiesSpawn = 0.0f;
+        crntTimeWaveSpawn = 0.0f;
+    }
+
+    public void Subscribe() {
+        gameplayUIManager.OnPauseClicked += PauseGame;
+        gameplayUIManager.OnResumeClicked += ResumeGame;
+    }
+
+    public void Unsubscribe() {
+        gameplayUIManager.OnPauseClicked -= PauseGame;
+        gameplayUIManager.OnResumeClicked -= ResumeGame;
     }
 
     public void SpawnCenterFlower() {
@@ -124,9 +149,7 @@ public class GameplayManager : Singleton<GameplayManager>
     public void SpawnFlower() {
         Vector3 pos = boardManager.GetRandomSpawnPos();
 
-        int flowerInd = Random.Range(0, flowersPrefabs.Length);
-
-        Flower newFlower = Instantiate(flowersPrefabs[flowerInd]);
+        Flower newFlower = Poolable.TryGetPoolable<Flower>(flowerLibrary.GetRandomSpawnFlowerGO());
         newFlower.transform.position = pos;
         newFlower.transform.SetParent(flowersAnchor);
         listOfCurrentFlowers.Add(newFlower);
@@ -138,8 +161,9 @@ public class GameplayManager : Singleton<GameplayManager>
         }
     }
 
-    public void SpawnFlower(int id, Vector3 pos) {
-        Flower newFlower = Instantiate(resultFlowerPrefab);
+    public void SpawnFlower(string uid, Vector3 pos) {
+        Flower newFlower = Poolable.TryGetPoolable<Flower>(flowerLibrary.GetFlowerGO(uid));
+
         newFlower.transform.position = pos;
         newFlower.transform.SetParent(flowersAnchor);
         listOfCurrentFlowers.Add(newFlower);
@@ -179,12 +203,16 @@ public class GameplayManager : Singleton<GameplayManager>
     }
 
     public void TryCombineFlowers(Flower flowerDragged, Flower flowerStation, Vector3 pos) {
-        flowerDragged.ReleaseFlower();
-        SpawnFlower(0, pos);
-        flowerDragged.Death();
-        flowerStation.Death();
-    }
+        ReleaseFlower(flowerDragged);
 
+        string newUID = flowerLibrary.GetUIDCombinationOfFlowers(flowerStation, flowerDragged);
+        if (newUID != null)
+        {
+            SpawnFlower(newUID, pos);
+            flowerDragged.Death();
+            flowerStation.Death();
+        }
+    }
 
     public void TrySpawnEnemies()
     {
@@ -199,11 +227,19 @@ public class GameplayManager : Singleton<GameplayManager>
     }
 
     public void SpawnEnemy() {
-        Vector3 pos = boardManager.GetRandomSpawnPos();
+        string uid = enemyLibrary.GetRandomEnemySpawnUID();
+        SpawnEnemy(uid);
+    }
 
-        int enemyInd = Random.Range(0, enemyPrefabs.Length);
-        Enemy newEnemy = Instantiate(enemyPrefabs[enemyInd]);
-        newEnemy.transform.position = boardManager.GetRandomOffScreenSpawnPos();
+    public void SpawnEnemy(string uid) { 
+        Vector3 pos = boardManager.GetRandomOffScreenSpawnPos();
+        SpawnEnemy(uid, pos);
+    }
+
+    public void SpawnEnemy(string uid, Vector3 pos) {
+        Enemy newEnemy = Poolable.TryGetPoolable<Enemy>(enemyLibrary.GetEnemyGO(uid));
+        
+        newEnemy.transform.position = pos;
         newEnemy.transform.SetParent(enemiesAnchor);
         newEnemy.moveAim = centerFlower.transform.position;
         listOfCurrentEnemies.Add(newEnemy);
@@ -230,6 +266,25 @@ public class GameplayManager : Singleton<GameplayManager>
         return pos;
     }
 
+    public void TrySpawnWave() {
+        if (crntTimeWaveSpawn > timeBetweenWaves) {
+            crntTimeWaveSpawn = 0.0f;
+            SpawnWave(crntWave);
+            crntWave= Mathf.Min(crntWave+1, enemyWaves.Length-1);
+            return;
+        }
+        crntTimeWaveSpawn += Time.deltaTime;
+        return;
+    }
+
+    public void SpawnWave(int waveNum) {
+        for (int i = 0; i < enemyWaves[waveNum].enemies.Count; i++) {
+            for (int k = 0; k < enemyWaves[waveNum].enemies[i].count; k++) {
+                SpawnEnemy(enemyWaves[waveNum].enemies[i].uid);
+            }
+        }
+    }
+
     public void AddMoney(int count) {
         money += count;
         gameplayUIManager.UpdateMoneyValue(money);
@@ -237,7 +292,15 @@ public class GameplayManager : Singleton<GameplayManager>
 
     public void ChangeHealth(int value) {
         health += value;
-        gameplayUIManager.UpdateHealthValue(health);
+
+        if (health <= 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            gameplayUIManager.UpdateHealthValue(health);
+        }
     }
 
     public void ChangeGameTimeValue(float value)
@@ -249,5 +312,13 @@ public class GameplayManager : Singleton<GameplayManager>
     public void GameOver() {
         gameplayState = GameplayState.GameOver;
         gameplayUIManager.GameOver();
+    }
+
+    public void PauseGame() {
+        gameplayState = GameplayState.Pause;
+    }
+
+    public void ResumeGame() {
+        gameplayState = GameplayState.Gameplay;
     }
 }

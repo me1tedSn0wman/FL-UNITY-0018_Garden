@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1874314248607464693}
+  - component: {fileID: 4634622433864261513}
   - component: {fileID: 4349364623983488306}
   - component: {fileID: 7968946166168678306}
-  - component: {fileID: 4634622433864261513}
   - component: {fileID: 4938294350187482745}
   - component: {fileID: 6225154318490851286}
+  - component: {fileID: 3523158078857993210}
   m_Layer: 7
   m_Name: Enemy_2
   m_TagString: Enemy
@@ -30,12 +31,29 @@ Transform:
   m_GameObject: {fileID: 7459746040426082983}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.8779445, y: 1.1230118, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4634622433864261513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7459746040426082983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 129d049279c6b524f92d39ad2a897a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uid: base_02
+  health: 1
+  speed: 0.2
+  moveAim: {x: 0, y: 0, z: 0}
+  animSpeed: 0.2
 --- !u!212 &4349364623983488306
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -133,22 +151,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4634622433864261513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7459746040426082983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129d049279c6b524f92d39ad2a897a53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 1
-  speed: 0.2
-  moveAim: {x: 0, y: 0, z: 0}
-  animSpeed: 0.2
 --- !u!50 &4938294350187482745
 Rigidbody2D:
   serializedVersion: 4
@@ -197,3 +199,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3523158078857993210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7459746040426082983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 739328ade87a9b44094929e8d02d00ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialPoolCapacity: 30

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utils.PoolControl;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -9,14 +10,23 @@ public class Projectile : MonoBehaviour
 
     public Vector3 direction;
 
+    [SerializeField] private Vector2 boundXMinMax;
+    [SerializeField] private Vector2 boundYMinMax;
+
     public virtual void Update()
     {
+        if (GameplayManager.Instance.gameplayState != GameplayState.Gameplay)
+            return;
+        
         TryMove();
+        CheckBoundaries();
     }
 
     public virtual void TryMove() {
         transform.position += Time.deltaTime * speed * direction;
     }
+
+
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -29,9 +39,24 @@ public class Projectile : MonoBehaviour
             }
         }
     }
+    public void CheckBoundaries()
+    {
+        if (false
+            || transform.position.x <= boundXMinMax.x
+            || transform.position.x >= boundXMinMax.y
+            || transform.position.y <= boundYMinMax.x
+            || transform.position.y >= boundYMinMax.y
+            )
+            DestroyProjectile();
+    }
 
     public void DestroyProjectile()
     {
-        Destroy(gameObject);
+        ReturnToPool();
+//        Destroy(gameObject);
+    }
+
+    public void ReturnToPool() {
+        Poolable.TryPool(gameObject);
     }
 }

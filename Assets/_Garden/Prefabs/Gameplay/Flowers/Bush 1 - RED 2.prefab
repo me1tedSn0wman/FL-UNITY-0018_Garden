@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7386068643434621893}
   - component: {fileID: 4257856379761916023}
+  - component: {fileID: 4031458718133734544}
+  - component: {fileID: 4961559860106336027}
   - component: {fileID: 2199501849655750417}
   - component: {fileID: 5989582207520447004}
-  - component: {fileID: 4031458718133734544}
   m_Layer: 6
   m_Name: Bush 1 - RED 2
   m_TagString: Untagged
@@ -87,6 +88,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4031458718133734544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7512045666429661533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 919615fca472caa488e181ed8038cb79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uid: red_02
+  flowerState: 0
+  projectileDamage: 2
+  projectileSpeed: 2
+  projectilePrefabGO: {fileID: 8933974276934585954, guid: 5126df6f21b080641b122f336b7e5230, type: 3}
+  crntTimeProjectileSpawn: 0
+  timeBetweenProjectileSpawns: 1
+--- !u!114 &4961559860106336027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7512045666429661533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 739328ade87a9b44094929e8d02d00ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialPoolCapacity: 20
 --- !u!61 &2199501849655750417
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,21 +192,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4031458718133734544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7512045666429661533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919615fca472caa488e181ed8038cb79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flowerState: 0
-  projectileDamage: 2
-  projectileSpeed: 2
-  projectilePrefab: {fileID: -778935857694236432, guid: 5126df6f21b080641b122f336b7e5230, type: 3}
-  crntTimeProjectileSpawn: 0
-  timeBetweenProjectileSpawns: 1

@@ -89,7 +89,7 @@ public class BoardManager : MonoBehaviour
 
         Vector3 pos = m_Grid.GetCellCenterWorld((Vector3Int)offScreenCells[randCell]);
 
-        return pos;
+        return new Vector3(pos.x, pos.y,0);
 
     }
 }

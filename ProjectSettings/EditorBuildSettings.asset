@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Garden/Scenes/GameplayScene.unity
-    guid: a27da5db66a4c0949a6764a8784871e3
-  - enabled: 1
     path: Assets/_Garden/Scenes/MainMenuScene.unity
     guid: 142d3a81f46d82c40bb3569dbe7b97ac
+  - enabled: 1
+    path: Assets/_Garden/Scenes/GameplayScene.unity
+    guid: a27da5db66a4c0949a6764a8784871e3
   m_configObjects: {}

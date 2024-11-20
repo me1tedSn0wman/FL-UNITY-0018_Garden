@@ -10,7 +10,7 @@ public class AudioControlManager
         get { return _soundVolume; }
         set {
             _soundVolume = Mathf.Clamp01(value);
-            OnSoundVolumeChanged(_soundVolume);
+            OnSoundVolumeChanged?.Invoke(_soundVolume);
         }
     }
     public static event Action<float> OnSoundVolumeChanged;
@@ -22,7 +22,7 @@ public class AudioControlManager
         get { return _musicVolume; }
         set { 
             _musicVolume = Mathf.Clamp01(value);
-            OnMusicVolumeChanged(_musicVolume);
+            OnMusicVolumeChanged?.Invoke(_musicVolume);
         }
     }
     public static event Action<float> OnMusicVolumeChanged;

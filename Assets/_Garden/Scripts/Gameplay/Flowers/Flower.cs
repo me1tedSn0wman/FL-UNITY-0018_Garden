@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utils.PoolControl;
 
 public enum FlowerState {
     None,
@@ -10,6 +11,11 @@ public enum FlowerState {
 [RequireComponent(typeof(Rigidbody2D))]
 public class Flower : MonoBehaviour
 {
+    [SerializeField] private string _uid;
+    [SerializeField] public string uid { 
+        get { return _uid; }
+    }
+
     [SerializeField] private FlowerState flowerState;
 
     public Vector3 immediatePos
@@ -22,11 +28,15 @@ public class Flower : MonoBehaviour
         flowerState = FlowerState.None;
     }
 
-    public virtual void Update() { 
-    
+    public virtual void Update() {
+        if (GameplayManager.Instance.gameplayState != GameplayState.Gameplay)
+            return;
     }
 
     public virtual void OnTriggerEnter2D(Collider2D collision) {
+        if (flowerState == FlowerState.Dragging)
+            return;
+
         if (collision.CompareTag("Enemy"))
         {
             Enemy other = collision.gameObject.GetComponent<Enemy>();
@@ -38,12 +48,6 @@ public class Flower : MonoBehaviour
         }
     }
 
-    public void Death()
-    {
-        GameplayManager.Instance.RemoveFlowerFromList(this);
-
-        Destroy(gameObject);
-    }
 
 
     public virtual void OnMouseDown() {
@@ -87,4 +91,17 @@ public class Flower : MonoBehaviour
         gameObject.layer = newLayer;
         Debug.Log(gameObject.layer);
     }
+
+    public virtual void Death()
+    {
+        GameplayManager.Instance.RemoveFlowerFromList(this);
+
+        ReturnToPool();
+    }
+
+    public virtual void ReturnToPool()
+    {
+        Poolable.TryPool(gameObject);
+    }
+
 }

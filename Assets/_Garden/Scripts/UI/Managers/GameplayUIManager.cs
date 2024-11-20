@@ -6,15 +6,16 @@ using UnityEngine.UI;
 public class GameplayUIManager : MonoBehaviour
 {
     [Header("Windows")]
-    [SerializeField] private WindowUI pauseUI;
+    [SerializeField] private PauseUI pauseUI;
     [SerializeField] private WindowUI settingsUI;
-    [SerializeField] private WindowUI gameOverUI;
+    [SerializeField] private GameOverUI gameOverUI;
+    [SerializeField] private WindowUI gameplayUpgradesUI;
 
     [Header("Buttons")]
     [SerializeField] private Button button_Pause;
+    [SerializeField] private Button button_ShowUpgrades;
 
     [Header("Textes")]
-
     [SerializeField] private TextMeshProUGUI text_timerValue;
     [SerializeField] private TextMeshProUGUI text_MoneyValue;
     [SerializeField] private TextMeshProUGUI text_HealthValue;
@@ -30,6 +31,18 @@ public class GameplayUIManager : MonoBehaviour
             pauseUI.SetActive(true);
             OnPauseClicked();
         });
+
+        button_ShowUpgrades.onClick.AddListener(() =>
+        {
+            gameplayUpgradesUI.SetActive(true);
+        });
+
+        pauseUI.gameplayUIManager = this;
+
+        pauseUI.SetActive(false);
+        settingsUI.SetActive(false);
+        gameOverUI.SetActive(false);
+        gameplayUpgradesUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -54,6 +67,18 @@ public class GameplayUIManager : MonoBehaviour
         text_HealthValue.text = string.Format("{0:d1}", health);
     }
 
+    public void ShowSettingsUI() {
+        settingsUI.SetActive(true);
+    }
+
+    public void ToMainMenu() {
+        GameManager.LOAD_MAIN_MENU_SCENE();
+    }
+
+    public void ResumeGame() {
+        pauseUI.SetActive(false);
+        OnResumeClicked();
+    }
 
     public void GameOver() {
         gameOverUI.SetActive(true);
