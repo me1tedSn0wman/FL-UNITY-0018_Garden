@@ -22,21 +22,25 @@ public class PauseUI : WindowUI
         button_CloseWindowCanvas.onClick.AddListener(() =>
         {
             gameplayUIManager.ResumeGame();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         button_ResumeGame.onClick.AddListener(() =>
         {
             gameplayUIManager.ResumeGame();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         button_Settings.onClick.AddListener(() =>
         {
             gameplayUIManager.ShowSettingsUI();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         button_ToMainMenu.onClick.AddListener(() =>
         {
             gameplayUIManager.ToMainMenu();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
     }

@@ -29,12 +29,14 @@ public class GameplayUIManager : MonoBehaviour
         button_Pause.onClick.AddListener(() =>
         {
             pauseUI.SetActive(true);
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
             OnPauseClicked();
         });
 
         button_ShowUpgrades.onClick.AddListener(() =>
         {
             gameplayUpgradesUI.SetActive(true);
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         pauseUI.gameplayUIManager = this;

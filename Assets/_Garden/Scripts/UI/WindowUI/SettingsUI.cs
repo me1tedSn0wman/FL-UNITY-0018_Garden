@@ -21,12 +21,14 @@ public class SettingsUI : WindowUI
         {
             AudioControlManager.soundVolume = value;
             text_SoundVolume.text = ((int)(value * 100)).ToString();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         slider_MusicVolume.onValueChanged.AddListener((value) =>
         {
             AudioControlManager.musicVolume = value;
             text_MusicVolume.text = ((int)(value * 100)).ToString();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         UpdateInitValues();

@@ -26,7 +26,7 @@ public class GameplayManager : Singleton<GameplayManager>
 
     [SerializeField] public FlowerLibrary flowerLibrary;
     [SerializeField] public EnemyLibrary enemyLibrary;
-    [SerializeField] public PoolManager poolManager;
+    [SerializeField] public GameplayUpgradesLibrary gameplayUpgradesLibrary;
 
     [Header("Game Object Anchors")]
     [SerializeField] private Transform flowersAnchor;
@@ -55,8 +55,8 @@ public class GameplayManager : Singleton<GameplayManager>
     [SerializeField] private Flower selectedFlower;
     [SerializeField] public CenterFlower centerFlower;
 
-    [SerializeField] private List<Flower> listOfCurrentFlowers;
-    [SerializeField] private List<Enemy> listOfCurrentEnemies;
+    [SerializeField] public List<Flower> listOfCurrentFlowers;
+    [SerializeField] public List<Enemy> listOfCurrentEnemies;
 
     [SerializeField] private float crntTimeFlowerSpawn;
     [SerializeField] private float crntTimeEnemiesSpawn;
@@ -153,6 +153,7 @@ public class GameplayManager : Singleton<GameplayManager>
         newFlower.transform.position = pos;
         newFlower.transform.SetParent(flowersAnchor);
         listOfCurrentFlowers.Add(newFlower);
+        GameManager.Instance.soundLibrary.PlayOneShoot("spawnFlower");
     }
 
     public void RemoveFlowerFromList(Flower flower) {
@@ -167,6 +168,7 @@ public class GameplayManager : Singleton<GameplayManager>
         newFlower.transform.position = pos;
         newFlower.transform.SetParent(flowersAnchor);
         listOfCurrentFlowers.Add(newFlower);
+        GameManager.Instance.soundLibrary.PlayOneShoot("spawnFlower");
     }
 
     public void TrySpawnFlowers()
@@ -211,6 +213,7 @@ public class GameplayManager : Singleton<GameplayManager>
             SpawnFlower(newUID, pos);
             flowerDragged.Death();
             flowerStation.Death();
+            GameManager.Instance.soundLibrary.PlayOneShoot("combineFlowers");
         }
     }
 
@@ -283,6 +286,7 @@ public class GameplayManager : Singleton<GameplayManager>
                 SpawnEnemy(enemyWaves[waveNum].enemies[i].uid);
             }
         }
+        GameManager.Instance.soundLibrary.PlayOneShoot("spawnWave");
     }
 
     public void AddMoney(int count) {
@@ -292,6 +296,8 @@ public class GameplayManager : Singleton<GameplayManager>
 
     public void ChangeHealth(int value) {
         health += value;
+        GameManager.Instance.soundLibrary.PlayOneShoot("centralFlowerDamage");
+
 
         if (health <= 0)
         {

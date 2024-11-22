@@ -33,18 +33,19 @@ namespace Utils.PoolControl
         {
             Poolable poolable = prefab.GetComponent<Poolable>();
             T instance = null;
-            Debug.Log(poolable + "___" + PoolManager.instanceExists);
+//            Debug.Log(poolable + "___" + PoolManager.instanceExists);
             if (poolable != null &&
                 PoolManager.instanceExists
                 )
             {
-                Debug.Log("Get from Pool");
                 instance = PoolManager.Instance.GetPoolable(poolable).GetComponent<T>();
+//                Debug.Log("(PoolManager) Get from Pool: " + instance.name);
             }
             else
             {
-                Debug.Log("create");
+                
                 instance = Instantiate(prefab).GetComponent<T>();
+//                Debug.Log("(PoolManager) Create Instance: " + instance.name);
             }
             return instance;
         }

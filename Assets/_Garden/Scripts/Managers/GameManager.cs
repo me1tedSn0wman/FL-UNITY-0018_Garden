@@ -13,11 +13,13 @@ public class GameManager : Soliton<GameManager>
 
     public WindowUI loadingFirstScreenUI;
 
+    public AudioLibrary soundLibrary;
+    public AudioLibrary musicLibrary;
+
     public override void Awake() { 
         base.Awake();
         dataIsLoaded = false;
 
-        audioControlManager = new AudioControlManager();
 
 
 #if PLATFORM_WEBGL
@@ -40,6 +42,7 @@ public class GameManager : Soliton<GameManager>
         if (!dataIsLoaded) GetLoadDataYG();
         yield return new WaitForSeconds(0.5f);
         YandexGame.GameReadyAPI();
+        musicLibrary.PlayLoop("mainMenu");
         loadingFirstScreenUI.SetActive(false);
     }
 
@@ -65,9 +68,11 @@ public class GameManager : Soliton<GameManager>
 
     public static void LOAD_GAMEPLAY_SCENE() {
         SceneManager.LoadScene("GameplayScene", LoadSceneMode.Single);
+        Instance.musicLibrary.PlayLoop("gameplay");
     }
 
     public static void LOAD_MAIN_MENU_SCENE() {
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        Instance.musicLibrary.PlayLoop("mainMenu");
     }
 }

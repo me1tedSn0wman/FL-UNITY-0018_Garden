@@ -48,6 +48,12 @@ public class AudioControl : MonoBehaviour
         audioSource.PlayOneShot(audioclip);
     }
 
+    public void PlayLoop(AudioClip audioClip) { 
+        audioSource.loop = true;
+        audioSource.clip = audioClip;
+        audioSource.Play();
+    }
+
     public void Play() {
         audioSource.Play();
     }

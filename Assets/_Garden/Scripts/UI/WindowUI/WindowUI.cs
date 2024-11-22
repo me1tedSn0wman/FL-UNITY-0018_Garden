@@ -11,6 +11,7 @@ public class WindowUI : MonoBehaviour
             button_CloseWindowCanvas.onClick.AddListener(() =>
             {
                 gameObject.SetActive(false);
+                GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
             });
         }
     }

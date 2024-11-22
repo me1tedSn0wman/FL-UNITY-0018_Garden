@@ -19,11 +19,13 @@ public class GameplayUpgradesUI : WindowUI
         button_HideGameplayUpgradesLeft.onClick.AddListener(() =>
         {
             SetActive(false);
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         button_HideGameplayUpgradesRight.onClick.AddListener(() =>
         {
             SetActive(false);
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
     }
 

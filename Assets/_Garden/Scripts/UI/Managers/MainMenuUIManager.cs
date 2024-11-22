@@ -19,21 +19,25 @@ public class MainMenuUIManager : MonoBehaviour
         button_StartGame.onClick.AddListener(() =>
         {
             GameManager.LOAD_GAMEPLAY_SCENE();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         button_Upgrades.onClick.AddListener(() =>
         {
             upgradesUI.SetActive(true);
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         button_Leaderboard.onClick.AddListener(() =>
         {
             leaderboardUI.SetActive(true);
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         button_Settings.onClick.AddListener(() =>
         {
             settingsUI.SetActive(true);
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
     }
 }

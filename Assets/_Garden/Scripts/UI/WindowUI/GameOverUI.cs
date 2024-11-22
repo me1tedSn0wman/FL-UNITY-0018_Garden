@@ -14,16 +14,19 @@ public class GameOverUI : WindowUI
         button_ResumeGame.onClick.AddListener(() =>
         {
             YandexGame.FullscreenShow();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         button_RestartGame.onClick.AddListener(() =>
         {
             GameManager.LOAD_GAMEPLAY_SCENE();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
         button_ToMainMenu.onClick.AddListener(() =>
         {
             GameManager.LOAD_MAIN_MENU_SCENE();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
     }

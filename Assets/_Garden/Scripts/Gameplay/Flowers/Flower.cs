@@ -16,7 +16,9 @@ public class Flower : MonoBehaviour
         get { return _uid; }
     }
 
-    [SerializeField] private FlowerState flowerState;
+    [SerializeField] protected FlowerState flowerState;
+
+    [SerializeField] protected FlowerHealthArea flowerHealthArea;
 
     public Vector3 immediatePos
     {
@@ -26,29 +28,24 @@ public class Flower : MonoBehaviour
 
     public virtual void Start() {
         flowerState = FlowerState.None;
+        Subscribe();
     }
 
     public virtual void Update() {
         if (GameplayManager.Instance.gameplayState != GameplayState.Gameplay)
             return;
+        if (flowerState != FlowerState.None)
+            return;
     }
 
-    public virtual void OnTriggerEnter2D(Collider2D collision) {
+    public virtual void FlowerTouchedByEnemy(Enemy enemy)
+    {
         if (flowerState == FlowerState.Dragging)
             return;
 
-        if (collision.CompareTag("Enemy"))
-        {
-            Enemy other = collision.gameObject.GetComponent<Enemy>();
-            if (other != null)
-            {
-                other.ChangeHealth(-1);
-                Death();
-            }
-        }
+        enemy.ChangeHealth(-1);
+        Death();
     }
-
-
 
     public virtual void OnMouseDown() {
         if (flowerState != FlowerState.None)
@@ -82,20 +79,18 @@ public class Flower : MonoBehaviour
         flowerState = FlowerState.Dragging;
         int newLayer = LayerMask.NameToLayer("DraggedFlower");
         gameObject.layer = newLayer;
-        Debug.Log(gameObject.layer);
     }
 
     public void ReleaseFlower() {
         flowerState = FlowerState.None;
         int newLayer = LayerMask.NameToLayer("Flower");
         gameObject.layer = newLayer;
-        Debug.Log(gameObject.layer);
     }
 
     public virtual void Death()
     {
         GameplayManager.Instance.RemoveFlowerFromList(this);
-
+        GameManager.Instance.soundLibrary.PlayOneShoot("flowerDeath");
         ReturnToPool();
     }
 
@@ -104,4 +99,17 @@ public class Flower : MonoBehaviour
         Poolable.TryPool(gameObject);
     }
 
+    public void OnDestroy()
+    {
+        Unsubscribe();
+    }
+
+    public virtual void Subscribe() {
+        flowerHealthArea.OnEnemyTouchFlower += FlowerTouchedByEnemy;
+    }
+
+    public virtual void Unsubscribe()
+    {
+        flowerHealthArea.OnEnemyTouchFlower -= FlowerTouchedByEnemy;
+    }
 }
