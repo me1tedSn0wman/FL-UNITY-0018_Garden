@@ -7,6 +7,7 @@ public class PauseUI : WindowUI
     [Header("Buttons")]
     [SerializeField] private Button button_ResumeGame;
     [SerializeField] private Button button_Settings;
+    [SerializeField] private Button button_Info;
     [SerializeField] private Button button_ToMainMenu;
 
     [Header("Set Dynamically")]
@@ -34,6 +35,12 @@ public class PauseUI : WindowUI
         button_Settings.onClick.AddListener(() =>
         {
             gameplayUIManager.ShowSettingsUI();
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
+        });
+
+        button_Info.onClick.AddListener(() =>
+        {
+            gameplayUIManager.ShowInfoUI();
             GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 

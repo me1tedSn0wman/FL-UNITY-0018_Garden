@@ -1,18 +1,23 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// BLUE
+/// </summary>
 public class AreaSlowerFlower : Flower
 {
-    public float areaRadius;
+    [SerializeField] protected float baseAreaRadius;
+
     public float slowedTime;
 
     [SerializeField] private float timeBetweenSlowedStatus;
     [SerializeField] private GameObject areaFlowerColliderGO;
 
     [Header("Set Dynamically")]
-    [SerializeField] private float crntTimeAreaSlower;
+    [SerializeField] protected float areaRadius;
     [SerializeField] private Vector3 areaLocalScaleBase;
+
+    [SerializeField] private float crntTimeAreaSlower;
     [SerializeField] private AreaFlowerCollider areaFlowerCollider;
     [SerializeField] private List<Enemy> listOfEnemiesInArea;
 
@@ -87,5 +92,9 @@ public class AreaSlowerFlower : Flower
         areaFlowerCollider.OnEnemyEntryArea -= EnemyEntryArea;
         areaFlowerCollider.OnEnemyLeaveArea -= EnemyLeaveArea;
         base.Unsubscribe();
+    }
+
+    public override void CheckUpgrades(string upgradeUID) {
+        int areaRadiusFromUpgrades = GameplayManager.Instance.gameplayUpgradesLibrary.GetUpgradeFinalValue("blueAreaSize");
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,10 @@ public class GameplayUpgradesUI : WindowUI
     [SerializeField] private GameObject go_Content;
 
     [Header("Prefab")]
-    [SerializeField] private GameObject prefab_UpgradePrefab;
+    [SerializeField] private GameplayUpgradeIconPrefab prefab_UpgradeIconPrefab;
+
+    [Header("Set Dynamically")]
+    [SerializeField] private List<GameplayUpgradeIconPrefab> listOfIcons;
 
     public void Start()
     {
@@ -27,6 +31,8 @@ public class GameplayUpgradesUI : WindowUI
             SetActive(false);
             GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
+
+        
     }
 
     public void OnEnable()
@@ -36,5 +42,15 @@ public class GameplayUpgradesUI : WindowUI
 
     public void UpdateContent() { 
     
+    }
+
+    public void SpawnUpgradableIcons(GameplayUpgrade[] upgrades) {
+        listOfIcons = new List<GameplayUpgradeIconPrefab>();
+        for (int i = 0; i < upgrades.Length; i++) {
+            GameplayUpgradeIconPrefab newIcon = Instantiate(prefab_UpgradeIconPrefab, go_Content.transform);
+
+            newIcon.SetUpIcon(upgrades[i]);
+            listOfIcons.Add(newIcon);
+        }
     }
 }

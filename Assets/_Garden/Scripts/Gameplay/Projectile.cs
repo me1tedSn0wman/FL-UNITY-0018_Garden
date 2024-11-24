@@ -12,6 +12,12 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private Vector2 boundXMinMax;
     [SerializeField] private Vector2 boundYMinMax;
+    [SerializeField] private Vector3 baseScale;
+
+    public void Awake()
+    {
+        baseScale = transform.localScale;
+    }
 
     public virtual void Update()
     {
@@ -53,10 +59,11 @@ public class Projectile : MonoBehaviour
     public void DestroyProjectile()
     {
         ReturnToPool();
-//        Destroy(gameObject);
+        //        Destroy(gameObject);
     }
 
     public void ReturnToPool() {
+        transform.localScale = baseScale;
         Poolable.TryPool(gameObject);
     }
 }

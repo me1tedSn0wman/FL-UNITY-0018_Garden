@@ -12,6 +12,8 @@ public class GameplayUpgradeDef : ScriptableObject
     public int priceBase;
     public int priceStep;
 
+    public int valuePerLevel;
+
     public Sprite sprite;
     public int maxLevel;
 }

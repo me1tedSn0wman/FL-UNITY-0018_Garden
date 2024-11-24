@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,8 +9,10 @@ public class GameplayUIManager : MonoBehaviour
     [Header("Windows")]
     [SerializeField] private PauseUI pauseUI;
     [SerializeField] private WindowUI settingsUI;
+    [SerializeField] private InfoUI infoUI;
     [SerializeField] private GameOverUI gameOverUI;
-    [SerializeField] private WindowUI gameplayUpgradesUI;
+    [SerializeField] private GameplayUpgradesUI gameplayUpgradesUI;
+    
 
     [Header("Buttons")]
     [SerializeField] private Button button_Pause;
@@ -19,6 +22,8 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text_timerValue;
     [SerializeField] private TextMeshProUGUI text_MoneyValue;
     [SerializeField] private TextMeshProUGUI text_HealthValue;
+    [SerializeField] private TextMeshProUGUI text_CapacityValue;
+    [SerializeField] private TextMeshProUGUI text_DiamondsValue;
 
     public event Action OnPauseClicked;
     public event Action OnResumeClicked;
@@ -45,6 +50,8 @@ public class GameplayUIManager : MonoBehaviour
         settingsUI.SetActive(false);
         gameOverUI.SetActive(false);
         gameplayUpgradesUI.SetActive(false);
+
+        Subscribe();
     }
 
     // Update is called once per frame
@@ -55,7 +62,7 @@ public class GameplayUIManager : MonoBehaviour
 
     public void UpdateTimerValue(float time)
     {
-        int time_sec = Mathf.FloorToInt(time) % 60;
+        int time_sec = Mathf.FloorToInt(time);
         text_timerValue.text = string.Format("{0:d3}", time_sec);
     }
 
@@ -69,8 +76,21 @@ public class GameplayUIManager : MonoBehaviour
         text_HealthValue.text = string.Format("{0:d1}", health);
     }
 
+    public void UpdateCapacityValue(int crntValue, int maxCapacity) {
+        text_CapacityValue.text = string.Format("{0:d2}/{1:d2}", crntValue, maxCapacity);
+    }
+
+    public void UpdateDiamondsValue(int diamonds) {
+        text_DiamondsValue.text = string.Format("{0:d5}", diamonds);
+    }
+
     public void ShowSettingsUI() {
         settingsUI.SetActive(true);
+    }
+
+    public void ShowInfoUI()
+    {
+        infoUI.SetActive(true);
     }
 
     public void ToMainMenu() {
@@ -84,5 +104,22 @@ public class GameplayUIManager : MonoBehaviour
 
     public void GameOver() {
         gameOverUI.SetActive(true);
+    }
+
+    public void SpawnUpgradableIcons(GameplayUpgrade[] upgrades) {
+        gameplayUpgradesUI.SpawnUpgradableIcons(upgrades);
+    }
+
+    public void Subscribe() {
+        GameManager.Instance.OnDiamondsValueChange += UpdateDiamondsValue;
+    }
+
+    public void Unsubscribe() {
+        GameManager.Instance.OnDiamondsValueChange -= UpdateDiamondsValue;
+    }
+
+    public void OnDestroy()
+    {
+        Unsubscribe();
     }
 }

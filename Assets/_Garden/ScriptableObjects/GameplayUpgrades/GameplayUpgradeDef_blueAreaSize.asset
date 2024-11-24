@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: GameplayUpgradeDef_blueAreaSize
   m_EditorClassIdentifier: 
   uid: blueAreaSize
-  title: 
-  description: 
-  priceBase: 0
-  priceStep: 0
-  sprite: {fileID: 0}
-  maxLevel: 0
+  title: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C \u0440\u0430\u0434\u0438\u0443\u0441
+    \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F"
+  description: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
+    \u0440\u0430\u0434\u0438\u0443\u0441 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F
+    \u0441\u0438\u043D\u0435\u0433\u043E \u0446\u0432\u0435\u0442\u043A\u0430 \u043D\u0430
+    20% \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C"
+  priceBase: 100
+  priceStep: 100
+  valuePerLevel: 20
+  sprite: {fileID: 21300000, guid: 5ee19d093d36b9648aacc7bb64523232, type: 3}
+  maxLevel: 10

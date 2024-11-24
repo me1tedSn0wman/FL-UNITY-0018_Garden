@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: GameplayUpgradeDef_redProjectileSize
   m_EditorClassIdentifier: 
   uid: redProjectileSize
-  title: 
-  description: 
-  priceBase: 0
-  priceStep: 0
-  sprite: {fileID: 0}
-  maxLevel: 0
+  title: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C \u0440\u0430\u0437\u043C\u0435\u0440
+    \u043F\u0443\u043B\u0438"
+  description: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
+    \u0440\u0430\u0437\u043C\u0435\u0440 \u043F\u0443\u043B\u0438 \u043A\u0440\u0430\u0441\u043D\u044B\u0445
+    \u0446\u0432\u0435\u0442\u043E\u0432 \u043D\u0430 25% \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C"
+  priceBase: 150
+  priceStep: 150
+  valuePerLevel: 25
+  sprite: {fileID: 21300000, guid: 0b113a286d117c64e8c58b798a64f54d, type: 3}
+  maxLevel: 10

@@ -50,10 +50,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uid: base_03
+  baseHealth: 1
+  baseSpeed: 0.2
+  healthPerLevel: 0
+  speedPerLevel: 0.1
+  animSpeed: 0.1
+  enemyLevel: 0
   health: 1
   speed: 0.2
   moveAim: {x: 0, y: 0, z: 0}
-  animSpeed: 0.1
+  baseScale: {x: 0, y: 0, z: 0}
   crntTimeSlowed: 0
   timeBeforeRemoveSlowed: 0
 --- !u!212 &8166841697739794264

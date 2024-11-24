@@ -1,0 +1,22 @@
+{
+  "idSave": 754,
+  "isFirstSession": false,
+  "language": "ru",
+  "promptDone": false,
+  "diamonds": 854,
+  "highScore": 0,
+  "upgradeSaveData": [
+    {
+      "uid": "startFlowerCapacity",
+      "level": 0
+    },
+    {
+      "uid": "startHealth",
+      "level": 0
+    },
+    {
+      "uid": "startMoney",
+      "level": 0
+    }
+  ]
+}

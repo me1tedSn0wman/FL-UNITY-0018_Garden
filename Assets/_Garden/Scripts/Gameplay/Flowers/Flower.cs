@@ -29,6 +29,7 @@ public class Flower : MonoBehaviour
     public virtual void Start() {
         flowerState = FlowerState.None;
         Subscribe();
+        CheckUpgrades("_");
     }
 
     public virtual void Update() {
@@ -106,10 +107,15 @@ public class Flower : MonoBehaviour
 
     public virtual void Subscribe() {
         flowerHealthArea.OnEnemyTouchFlower += FlowerTouchedByEnemy;
+        GameplayManager.Instance.gameplayUpgradesLibrary.OnUpgradeLevelIncrease += CheckUpgrades;
     }
 
     public virtual void Unsubscribe()
     {
         flowerHealthArea.OnEnemyTouchFlower -= FlowerTouchedByEnemy;
+    }
+
+    public virtual void CheckUpgrades(string upgradeUID) { 
+        
     }
 }

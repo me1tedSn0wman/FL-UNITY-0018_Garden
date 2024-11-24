@@ -23,25 +23,34 @@ public class Enemy : MonoBehaviour
         private set { _enemyState = value; }
     }
 
+    public float baseHealth;
+    public float baseSpeed;
 
-    public float health;
-    public float speed;
-
-    public Vector3 moveAim;
-
+    public float healthPerLevel;
+    public float speedPerLevel;
 
     public float animSpeed = 0.2f;
 
-    private Animator animator;
+    [Header("Set Dynamically")]
+    public int enemyLevel;
 
-    public Vector3 pos {
+    public float health;
+    public float speed;
+    private bool isSlowed;
+
+    public Vector3 moveAim;
+
+    public Vector3 baseScale;
+
+    public Vector3 pos
+    {
         get { return transform.position; }
     }
 
-    private bool isSlowed;
     [SerializeField] private float crntTimeSlowed;
     [SerializeField] private float timeBeforeRemoveSlowed;
 
+    private Animator animator;
     private SpriteRenderer spriteRend;
     private Color baseColor;
 
@@ -55,6 +64,7 @@ public class Enemy : MonoBehaviour
         spriteRend = GetComponent<SpriteRenderer>();
 
         baseColor = spriteColor;
+        baseScale = transform.localScale;
     }
 
     public virtual void Start() {
@@ -78,7 +88,7 @@ public class Enemy : MonoBehaviour
         if (enemyState != EnemyState.Alive) {
             return;
         }
-        float finalSpeedAnim = !isSlowed ? speed : 0.25f * animSpeed;
+        float finalSpeedAnim = !isSlowed ? animSpeed : 0.25f * animSpeed;
         float finalSpeed = !isSlowed ? speed : 0.25f * speed;
 
         animator.speed = finalSpeedAnim;
@@ -108,7 +118,7 @@ public class Enemy : MonoBehaviour
 
     public void ReturnToPool() {
         enemyState = EnemyState.None;
-        Poolable.TryPool(gameObject);
+        Poolable.TryPool(this.gameObject);
     }
 
     public void SetSlowed(float time) {
@@ -137,5 +147,19 @@ public class Enemy : MonoBehaviour
             return;
         }
         crntTimeSlowed += Time.deltaTime;
+    }
+
+    public void SetEnemyLevel(int enemyLevel) {
+        enemyState = EnemyState.Alive;
+        if ((moveAim - transform.position).x > 0)
+        {
+            transform.localScale = new Vector3(-1 * baseScale.x, baseScale.y, baseScale.z);
+        }
+        else {
+            transform.localScale = new Vector3( 1 * baseScale.x, baseScale.y, baseScale.z);
+        }
+
+        health = baseHealth + enemyLevel * healthPerLevel;
+        speed = baseSpeed + enemyLevel * speedPerLevel;
     }
 }

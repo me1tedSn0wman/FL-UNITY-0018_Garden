@@ -1,10 +1,13 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class SettingsUI : WindowUI
 {
     [Header("Settings UI")]
+    [SerializeField] private InfoUI infoUI;
+
     [Header("Sliders")]
     [SerializeField] private Slider slider_SoundVolume;
     [SerializeField] private Slider slider_MusicVolume;
@@ -12,6 +15,9 @@ public class SettingsUI : WindowUI
     [Header("Textes")]
     [SerializeField] private TextMeshProUGUI text_SoundVolume;
     [SerializeField] private TextMeshProUGUI text_MusicVolume;
+
+    [Header("Buttons")]
+    [SerializeField] private Button button_Info;
 
     public override void Awake()
     {
@@ -31,6 +37,13 @@ public class SettingsUI : WindowUI
             GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
+        button_Info.onClick.AddListener(() =>
+        {
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
+            infoUI.SetActive(true);
+        });
+
+        infoUI.SetActive(false);
         UpdateInitValues();
     }
 

@@ -1,18 +1,25 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// PURPLE
+/// </summary>
 public class AreaFlower : Flower
 {
-    public float areaDamage;
-    public float areaRadius;
+    [SerializeField] protected float baseAreaDamage;
+    [SerializeField] protected float baseAreaRadius;
 
     [SerializeField] private float timeBetweenAreaDamage;
     [SerializeField] private GameObject areaDamageShowGO;
     
     [Header("Set Dynamically")]
-    [SerializeField] private float crntTimeAreaDamage;
+
+    [SerializeField] protected float areaDamage;
+    [SerializeField] protected float areaRadius;
     [SerializeField] private Vector3 areaLocalScaleBase;
+
+    [SerializeField] private float crntTimeAreaDamage;
     [SerializeField] private AreaFlowerCollider areaFlowerCollider;
     [SerializeField] private List<Enemy> listOfEnemiesInArea;
 
@@ -85,5 +92,16 @@ public class AreaFlower : Flower
         areaFlowerCollider.OnEnemyEntryArea -= EnemyEntryArea;
         areaFlowerCollider.OnEnemyLeaveArea -= EnemyLeaveArea;
         base.Unsubscribe();
+    }
+
+    public override void CheckUpgrades(string upgradeUID)
+    {
+        float areaDamageFromUpgrades = GameplayManager.Instance.gameplayUpgradesLibrary.GetUpgradeFinalValue("purpleAreaDamage");
+        float areaRadiusFromUpgrades = GameplayManager.Instance.gameplayUpgradesLibrary.GetUpgradeFinalValue("purpleAreaSize");
+
+        areaDamage = baseAreaDamage * (1 + areaDamageFromUpgrades *0.01f);
+        areaRadius = baseAreaRadius * (1 + 0.01f* areaRadiusFromUpgrades);
+
+        areaDamageShowGO.transform.localScale = areaLocalScaleBase * areaRadius;
     }
 }

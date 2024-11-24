@@ -85,9 +85,11 @@ namespace Utils.PoolControl
             }
             else
             {
+                /*
                 throw new InvalidOperationException(
                     "Trying to return an item to a pool that does not contain it: "
-                    + pooledItem + ", " + this);
+                    + pooledItem + ", " + this + ", " + typeof(T).FullName);
+                */
                 
             }
         }

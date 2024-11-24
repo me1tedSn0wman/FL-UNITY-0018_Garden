@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - uid: base_01
-    count: 20
+    count: 10
   - uid: base_02
-    count: 20
+    count: 15
   - uid: base_03
     count: 20

@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: GameplayUpgradeDef_whiteIncomeAmount
   m_EditorClassIdentifier: 
   uid: whiteIncomeAmount
-  title: 
-  description: 
-  priceBase: 0
-  priceStep: 0
-  sprite: {fileID: 0}
-  maxLevel: 0
+  title: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C \u0434\u043E\u0445\u043E\u0434"
+  description: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
+    \u0447\u0438\u0441\u043B\u043E \u0437\u043E\u043B\u043E\u0442\u0430 \u043D\u0430
+    10, \u043A\u043E\u0442\u043E\u0440\u043E\u0435 \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442
+    \u0431\u0435\u043B\u044B\u0439 \u0446\u0432\u0435\u0442\u043E\u043A"
+  priceBase: 200
+  priceStep: 200
+  valuePerLevel: 10
+  sprite: {fileID: 21300000, guid: 7221a03e03cb62c4e93c9c895b708475, type: 3}
+  maxLevel: 30

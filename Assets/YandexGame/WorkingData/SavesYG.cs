@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace YG
 {
     [System.Serializable]
@@ -12,9 +14,24 @@ namespace YG
 
         // Тестовые сохранения для демо сцены
         // Можно удалить этот код, но тогда удалите и демо (папка Example)
-        public int money = 1;                       // Можно задать полям значения по умолчанию
-        public string newPlayerName = "Hello!";
-        public bool[] openLevels = new bool[3];
+        public int diamonds = 100;                       // Можно задать полям значения по умолчанию
+        public int highScore = 0;
+
+        public List<SavedUpgrades> upgradeSaveData = new List<SavedUpgrades>();
+        public void SetSavedUpgradeLevel(string uid, int level) {
+            for (int i = 0; i < upgradeSaveData.Count; i++) {
+                if (uid == upgradeSaveData[i].uid) {
+                    upgradeSaveData[i].level = level;
+                    return;
+                }
+            }
+
+            SavedUpgrades temp =new SavedUpgrades();
+            temp.uid = uid;
+            temp.level = level;
+            upgradeSaveData.Add(temp);
+        }
+
 
         // Ваши сохранения
 
@@ -24,11 +41,18 @@ namespace YG
 
 
         // Вы можете выполнить какие то действия при загрузке сохранений
+
+#if PLATFORM_WEBGL
         public SavesYG()
         {
-            // Допустим, задать значения по умолчанию для отдельных элементов массива
 
-            openLevels[1] = true;
+        }
+#endif
+
+        [System.Serializable]
+        public class SavedUpgrades {
+            public string uid;
+            public int level;
         }
     }
 }
