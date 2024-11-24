@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Utils.PoolControl;
 
@@ -41,9 +42,11 @@ public class ProjectileFlower : Flower
     }
 
     public virtual void SpawnWaveProjectiles() {
-        Vector3 direction = (GameplayManager.Instance.GetNearestEnemyPos() - transform.position);
-
-        SpawnProjectile(direction);
+        Vector3 dir = GetDirectionToNearestEnemy();
+        if (dir == Vector3.zero)
+            return;
+        
+        SpawnProjectile(dir);
     }
 
     public virtual void SpawnProjectile(Vector3 direction) {
@@ -75,5 +78,26 @@ public class ProjectileFlower : Flower
         projectileSpeed = baseProjectileSpeed * (1 + 0.01f * projectileSpeedFromUpgr);
         projectileSize = baseProjectileSize * (1 + 0.01f * projectileSizeFromUpgr);
         timeBetweenProjectileSpawns = baseTimeBetweenProjectileSpawns * Mathf.Clamp(1.0f - 0.01f * spawnRateFromUpgrades, 0.1f, 1.0f);
+    }
+
+    public Vector3 GetDirectionToNearestEnemy() {
+        List<Enemy> enemies = GameplayManager.Instance.GetCurrentEnemies();
+        if (enemies.Count == 0) {
+            return Vector3.zero;
+        }
+        float dist = float.MaxValue;
+        Vector3 nearestPos = Vector3.zero;
+
+        for (int i = 0; i < enemies.Count; i++) {
+            float crntDist = (enemies[i].pos - transform.position).magnitude;
+            if (crntDist < dist) {
+                dist = crntDist;
+                nearestPos = enemies[i].pos;
+            }
+        }
+        Vector3 dir = nearestPos - transform.position;
+        dir.z = 0;
+
+        return dir;
     }
 }

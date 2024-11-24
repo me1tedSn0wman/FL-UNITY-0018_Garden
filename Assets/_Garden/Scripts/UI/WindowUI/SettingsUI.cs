@@ -16,8 +16,10 @@ public class SettingsUI : WindowUI
     [SerializeField] private TextMeshProUGUI text_SoundVolume;
     [SerializeField] private TextMeshProUGUI text_MusicVolume;
 
+    /*
     [Header("Buttons")]
     [SerializeField] private Button button_Info;
+    */
 
     public override void Awake()
     {
@@ -37,13 +39,19 @@ public class SettingsUI : WindowUI
             GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
+        /*
+
         button_Info.onClick.AddListener(() =>
         {
             GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
             infoUI.SetActive(true);
         });
 
+        */
+
+        /*
         infoUI.SetActive(false);
+        */
         UpdateInitValues();
     }
 

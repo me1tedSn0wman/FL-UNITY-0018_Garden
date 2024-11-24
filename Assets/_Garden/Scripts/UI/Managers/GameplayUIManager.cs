@@ -12,7 +12,9 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private InfoUI infoUI;
     [SerializeField] private GameOverUI gameOverUI;
     [SerializeField] private GameplayUpgradesUI gameplayUpgradesUI;
-    
+
+    [Header("Timer")]
+    [SerializeField] private Image image_Timer;
 
     [Header("Buttons")]
     [SerializeField] private Button button_Pause;
@@ -24,6 +26,7 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text_HealthValue;
     [SerializeField] private TextMeshProUGUI text_CapacityValue;
     [SerializeField] private TextMeshProUGUI text_DiamondsValue;
+    [SerializeField] private TextMeshProUGUI text_EnemyLevel;
 
     public event Action OnPauseClicked;
     public event Action OnResumeClicked;
@@ -50,6 +53,7 @@ public class GameplayUIManager : MonoBehaviour
         settingsUI.SetActive(false);
         gameOverUI.SetActive(false);
         gameplayUpgradesUI.SetActive(false);
+        infoUI.SetActive(false);
 
         Subscribe();
     }
@@ -60,9 +64,10 @@ public class GameplayUIManager : MonoBehaviour
         
     }
 
-    public void UpdateTimerValue(float time)
+    public void UpdateTimerValue(float time, float waveTimer)
     {
         int time_sec = Mathf.FloorToInt(time);
+        image_Timer.fillAmount = (time_sec% Mathf.FloorToInt(waveTimer)) / waveTimer;
         text_timerValue.text = string.Format("{0:d3}", time_sec);
     }
 
@@ -82,6 +87,10 @@ public class GameplayUIManager : MonoBehaviour
 
     public void UpdateDiamondsValue(int diamonds) {
         text_DiamondsValue.text = string.Format("{0:d5}", diamonds);
+    }
+
+    public void UpdateEnemyLevel(int enemyLevel) {
+        text_EnemyLevel.text = string.Format("{0:d2}", enemyLevel);
     }
 
     public void ShowSettingsUI() {

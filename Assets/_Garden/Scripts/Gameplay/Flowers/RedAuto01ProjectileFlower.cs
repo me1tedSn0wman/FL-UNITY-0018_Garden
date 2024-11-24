@@ -3,7 +3,11 @@ using UnityEngine;
 public class RedAuto01ProjectileFlower : ProjectileFlower
 {
     public override void SpawnWaveProjectiles() {
-        Vector3 direction = (GameplayManager.Instance.GetNearestEnemyPos() - transform.position);
+        Vector3 direction = GetDirectionToNearestEnemy();
+
+        if (direction == Vector3.zero) {
+            return;
+        }
 
         Vector2 dir1= new Vector2(direction.x, direction.y);
 

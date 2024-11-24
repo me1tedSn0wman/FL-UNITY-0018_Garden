@@ -158,6 +158,7 @@ public class GameplayManager : Singleton<GameplayManager>
 
         ChangeGameTimeValue(0);
         ChangeHealth(0);
+        gameplayUIManager.UpdateEnemyLevel(crntEnemyLevel);
         gameplayUIManager.UpdateDiamondsValue(diamonds);
     }
 
@@ -330,12 +331,17 @@ public class GameplayManager : Singleton<GameplayManager>
         return pos;
     }
 
+    public List<Enemy> GetCurrentEnemies() { 
+        return listOfCurrentEnemies;
+    }
+
     public void TrySpawnWave() {
         if (crntTimeWaveSpawn > timeBetweenWaves) {
             crntTimeWaveSpawn = 0.0f;
             SpawnWave(crntWave);
             crntWave= Mathf.Min(crntWave+1, enemyWaves.Length-1);
             crntEnemyLevel += 1;
+            gameplayUIManager.UpdateEnemyLevel(crntEnemyLevel);
             return;
         }
         crntTimeWaveSpawn += Time.deltaTime;
@@ -379,7 +385,7 @@ public class GameplayManager : Singleton<GameplayManager>
     public void ChangeGameTimeValue(float value)
     {
         gameTime += value;
-        gameplayUIManager.UpdateTimerValue(gameTime);
+        gameplayUIManager.UpdateTimerValue(gameTime, timeBetweenWaves);
     }
 
     public void GameOver() {

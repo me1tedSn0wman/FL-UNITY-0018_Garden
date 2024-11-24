@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class MainMenuUIManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] private UpgradesUI upgradesUI;
     [SerializeField] private WindowUI leaderboardUI;
     [SerializeField] private WindowUI settingsUI;
+    [SerializeField] private WindowUI infoUI;
 
     [Header("Textes")]
     [SerializeField] private TextMeshProUGUI text_DiamondsValue;
@@ -17,6 +19,7 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] private Button button_Upgrades;
     [SerializeField] private Button button_Leaderboard;
     [SerializeField] private Button button_Settings;
+    [SerializeField] private Button button_Info;
 
     public void Start()
     {
@@ -44,9 +47,16 @@ public class MainMenuUIManager : MonoBehaviour
             GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
         });
 
+        button_Info.onClick.AddListener(() =>
+        {
+            infoUI.SetActive(true);
+            GameManager.Instance.soundLibrary.PlayOneShoot("clickUI");
+        });
+
         upgradesUI.SetActive(false);
         leaderboardUI.SetActive(false);
         settingsUI.SetActive(false);
+        infoUI.SetActive(false);
 
         upgradesUI.SpawnUpgradableIcons(GameManager.Instance.gameUpgradesLibrary.GetUpgrades());
 
