@@ -250,7 +250,7 @@ MonoBehaviour:
   baseProjectileDamage: 1
   baseProjectileSpeed: 1.5
   baseProjectileSize: 1
-  baseTimeBetweenProjectileSpawns: 2
+  baseTimeBetweenProjectileSpawns: 3
   projectilePrefabGO: {fileID: 8933974276934585954, guid: 5126df6f21b080641b122f336b7e5230, type: 3}
   projectileDamage: 0
   projectileSpeed: 0

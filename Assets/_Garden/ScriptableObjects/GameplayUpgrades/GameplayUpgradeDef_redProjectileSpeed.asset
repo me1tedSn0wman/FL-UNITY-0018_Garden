@@ -21,4 +21,4 @@ MonoBehaviour:
   priceStep: 200
   valuePerLevel: 20
   sprite: {fileID: 21300000, guid: 0b113a286d117c64e8c58b798a64f54d, type: 3}
-  maxLevel: 20
+  maxLevel: 10

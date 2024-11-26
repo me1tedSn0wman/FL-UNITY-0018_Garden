@@ -19,7 +19,7 @@ MonoBehaviour:
     10, \u043A\u043E\u0442\u043E\u0440\u043E\u0435 \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442
     \u0431\u0435\u043B\u044B\u0439 \u0446\u0432\u0435\u0442\u043E\u043A"
   priceBase: 200
-  priceStep: 200
+  priceStep: 400
   valuePerLevel: 10
   sprite: {fileID: 21300000, guid: 7221a03e03cb62c4e93c9c895b708475, type: 3}
-  maxLevel: 30
+  maxLevel: 10

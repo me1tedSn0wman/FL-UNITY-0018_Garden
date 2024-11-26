@@ -159,7 +159,19 @@ public class Enemy : MonoBehaviour
             transform.localScale = new Vector3( 1 * baseScale.x, baseScale.y, baseScale.z);
         }
 
-        health = baseHealth + enemyLevel * healthPerLevel;
-        speed = baseSpeed + enemyLevel * speedPerLevel;
+        if (enemyLevel <= 15)
+        {
+            health = baseHealth + enemyLevel * healthPerLevel;
+            speed = baseSpeed + enemyLevel * speedPerLevel;
+        }
+        else if (enemyLevel <= 30) {
+            health = baseHealth + 50 * enemyLevel * healthPerLevel;
+            speed = baseSpeed + 2 * enemyLevel * speedPerLevel;
+        }
+        else
+        {
+            health = baseHealth + 200 * enemyLevel * healthPerLevel;
+            speed = baseSpeed + 3 * enemyLevel * speedPerLevel;
+        }
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2133317050292078576}
   - component: {fileID: 5702045991978534427}
   - component: {fileID: 4560838917527938687}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AreaDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 1225693108104704973}
   - component: {fileID: 6973101672633057589}
   - component: {fileID: 3720624733967178379}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FlowerHealthArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}

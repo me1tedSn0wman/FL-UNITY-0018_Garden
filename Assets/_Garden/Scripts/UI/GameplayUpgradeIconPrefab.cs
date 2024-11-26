@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,6 +52,7 @@ public class GameplayUpgradeIconPrefab : MonoBehaviour
 
     public void Unsubscribe()
     {
+        if (!GameplayManager.instanceExists) return;
         GameplayManager.Instance.gameplayUpgradesLibrary.OnUpgradeLevelIncrease -= CheckUpgrade;
     }
 

@@ -76,6 +76,8 @@ public class PlayerControlManager : MonoBehaviour
 
     public Vector3 GetPointerWorldPosition(float z)
     {
+        if (!GameplayManager.instanceExists) return Vector3.zero;
+        if (mainCamera == null) return Vector3.zero;
         Vector3 pointerPos = mainCamera.ScreenToWorldPoint(
             new Vector3(
                 crntMousePosition.x,

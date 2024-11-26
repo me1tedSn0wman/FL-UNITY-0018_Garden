@@ -96,5 +96,9 @@ public class AreaSlowerFlower : Flower
 
     public override void CheckUpgrades(string upgradeUID) {
         int areaRadiusFromUpgrades = GameplayManager.Instance.gameplayUpgradesLibrary.GetUpgradeFinalValue("blueAreaSize");
+
+        areaRadius = baseAreaRadius * (1 + 0.01f * areaRadiusFromUpgrades);
+
+        areaFlowerColliderGO.transform.localScale = areaLocalScaleBase * areaRadius;
     }
 }

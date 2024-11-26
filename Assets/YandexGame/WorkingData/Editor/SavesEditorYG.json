@@ -1,14 +1,14 @@
 {
-  "idSave": 1,
+  "idSave": 13,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
-  "diamonds": 100,
-  "highScore": 95,
+  "diamonds": 5,
+  "highScore": 497,
   "upgradeSaveData": [
     {
       "uid": "startFlowerCapacity",
-      "level": 0
+      "level": 2
     },
     {
       "uid": "startHealth",
@@ -16,7 +16,7 @@
     },
     {
       "uid": "startMoney",
-      "level": 0
+      "level": 6
     }
   ]
 }

@@ -306,7 +306,7 @@ public class GameplayManager : Singleton<GameplayManager>
         newEnemy.transform.position = pos;
         newEnemy.transform.SetParent(enemiesAnchor);
         newEnemy.moveAim = centerFlower.transform.position;
-        newEnemy.SetEnemyLevel(crntWave);
+        newEnemy.SetEnemyLevel(crntEnemyLevel);
         listOfCurrentEnemies.Add(newEnemy);
     }
 

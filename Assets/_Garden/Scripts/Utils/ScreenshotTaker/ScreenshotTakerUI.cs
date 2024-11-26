@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ScreenshotTaker))]
 public class ScreenshotTakerUI : Editor
 {
@@ -20,3 +21,4 @@ public class ScreenshotTakerUI : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif
