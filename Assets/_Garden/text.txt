@@ -1,6 +1,0 @@
-TODO 
-
-- Make Abstract Class for flowers for projectile income and other...
-	or make it by interface
-	or smth else...
-	

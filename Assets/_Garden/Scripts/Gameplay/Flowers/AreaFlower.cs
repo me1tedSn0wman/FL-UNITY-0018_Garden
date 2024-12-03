@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// PURPLE
+/// flower, which hits in area
 /// </summary>
 public class AreaFlower : Flower
 {

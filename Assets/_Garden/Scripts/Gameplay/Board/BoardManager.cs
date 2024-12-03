@@ -1,8 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+/*
+ Create a map, background for gameplay
+ */
 public class BoardManager : MonoBehaviour
 {
     private Tilemap m_Tilemap;

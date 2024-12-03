@@ -1,0 +1,28 @@
+TODO 
+
+- Make Abstract Class for flowers for projectile income and other...
+	or make it by interface
+	or smth else...
+
+- make gameplay map bigger 
+– make gameplay map more randomizable, using another tilesets
+– add a png which hide unused space 
+	
+– add more flowers:
+	- buf flower
+	- mine flower
+	- flower with projectiles, which shoots queue of projectiles
+	...
+
+- add more enemies
+	- "bat" fast and ignores flowers
+	- tough boss
+
+- add more global upgrades
+	- add some start flowers
+	...
+
+- add temporary bufs on ground 
+
+- remake sprite for central flower
+- add visual effects when projectile hits enemy

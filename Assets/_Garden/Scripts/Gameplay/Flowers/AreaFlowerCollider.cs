@@ -1,6 +1,11 @@
 using System;
 using UnityEngine;
 
+/*
+ collider, which using in area flower to detect enemies, who are entered area
+just send messages to mainObject
+ */
+[RequireComponent(typeof(Collider2D))]
 public class AreaFlowerCollider : MonoBehaviour
 {
     public event Action<Enemy> OnEnemyEntryArea;

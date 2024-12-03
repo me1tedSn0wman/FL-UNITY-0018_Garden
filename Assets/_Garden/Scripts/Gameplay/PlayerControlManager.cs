@@ -6,7 +6,9 @@ public enum DragState {
     Dragging,
 }
 
-
+/*
+ show position of pointer in game (mouse, touch)
+ */
 public class PlayerControlManager : MonoBehaviour
 {
     [SerializeField] private DragState dragState;
