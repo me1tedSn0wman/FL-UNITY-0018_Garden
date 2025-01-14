@@ -26,13 +26,4 @@ public class AudioControlManager
         }
     }
     public static event Action<float> OnMusicVolumeChanged;
-
-    public void SetSoundVolumeWithoutNotification(float value) {
-        _soundVolume = value;
-    }
-
-    public void SetMusicVolumeWithoutNotification(float value)
-    {
-        _musicVolume = value;
-    }
 }
